@@ -137,7 +137,7 @@
                         <div class="cd-dropdown-wrapper">
                             <a class="cd-dropdown-trigger" href="#0">Categorías</a>
                             <nav id="categorias" class="cd-dropdown"> 
-                                
+                             <a id="close" href="#0" class='cd-close'>Close</a>   
                             </nav> <!-- .cd-dropdown -->
                         </div> <!-- .cd-dropdown-wrapper -->     
                     </div>
@@ -156,78 +156,29 @@
         <!-- products -->
         <div class="products">   
             <div class="container">
-
-                <div id="productos" class="col-md-9 product-w3ls-right">                    
-                    
-                    
+                <div class="col-md-9 product-w3ls-right">
+                <div id="productos">                                     
                     
                     
                 </div>
+                </div>
+                 
+                
+
                 <div class="col-md-3 rsidebar">
                     <div class="rsidebar-top">
                         <div class="slider-left">
-                            <h4>Filter By Price</h4>            
-                            <div class="row row1 scroll-pane">
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>0 - $100 </label>
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$100 - $200 </label> 
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$200 - $250  </label> 
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$250 - $300 </label> 
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$350 - $400 </label> 
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>$450 - $500  </label> 
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>More</label> 
+                            <h4>Filtrar por Precio</h4>            
+                            <div id="check" class="row row1 scroll-pane">
+                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>S/.0 - S/.5000 <input type="hidden" name="min" value="0"><input type="hidden" name="max" value="5000"></label>
+
+                                <label class="checkbox"><input type="checkbox" name="checkbox" value="5000"><i></i>S/.5,000 - S/.10,000 <input type="hidden" name="min" value="5000"><input type="hidden" name="max" value="10000"></label> 
+                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>S/.10,000 - S/.15,000 <input type="hidden" name="min" value="10000"><input type="hidden" name="max" value="15000"></label> 
+                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>S/.15,000 - S/.20,000 <input type="hidden" name="min" value="15000"><input type="hidden" name="max" value="20000"></label> 
+                                 
                             </div> 
                         </div>
-                        <div class="sidebar-row">
-                            <h4> Electronics</h4>
-                            <ul class="faq">
-                                <li class="item1"><a href="#">Mobile phones<span class="glyphicon glyphicon-menu-down"></span></a>
-                                    <ul>
-                                        <li class="subitem1"><a href="#">Smart phones</a></li>                                      
-                                        <li class="subitem1"><a href="#">Accessories</a></li>                                       
-                                        <li class="subitem1"><a href="#">Tabs</a></li>                                      
-                                    </ul>
-                                </li>
-                                <li class="item2"><a href="#">Large appliances<span class="glyphicon glyphicon-menu-down"></span></a>
-                                    <ul>
-                                        <li class="subitem1"><a href="#">Refrigerators </a></li>                                        
-                                        <li class="subitem1"><a href="#">Washing Machine </a></li>                                      
-                                        <li class="subitem1"><a href="#">Kitchen Appliances </a></li>                                       
-                                        <li class="subitem1"><a href="#">Air Conditioner</a></li>                                       
-                                    </ul>
-                                </li>
-                                <li class="item3"><a href="#">Entertainment<span class="glyphicon glyphicon-menu-down"></span></a>
-                                    <ul>
-                                        <li class="subitem1"><a href="#"> Tv & Accessories</a></li>                                     
-                                        <li class="subitem1"><a href="#">Digital Camera </a></li>                                       
-                                        <li class="subitem1"><a href="#">Computer</a></li>                                      
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!-- script for tabs -->
-                            <script type="text/javascript">
-                                $(function() {
-                                
-                                    var menu_ul = $('.faq > li > ul'),
-                                           menu_a  = $('.faq > li > a');
-                                    
-                                    menu_ul.hide();
-                                
-                                    menu_a.click(function(e) {
-                                        e.preventDefault();
-                                        if(!$(this).hasClass('active')) {
-                                            menu_a.removeClass('active');
-                                            menu_ul.filter(':visible').slideUp('normal');
-                                            $(this).addClass('active').next().stop(true,true).slideDown('normal');
-                                        } else {
-                                            $(this).removeClass('active');
-                                            $(this).next().stop(true,true).slideUp('normal');
-                                        }
-                                    });
-                                
-                                });
-                            </script>
-                            <!-- script for tabs -->
-                        </div>
+                        
                         <div class="sidebar-row">
                             <h4>DISCOUNTS</h4>
                             <div class="row row1 scroll-pane">
@@ -240,18 +191,7 @@
                                 <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>10% - 5% (2)</label>
                                 <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Other(50)</label>
                             </div>
-                        </div>
-                        <div class="sidebar-row">
-                            <h4>Color</h4>
-                            <div class="row row1 scroll-pane">
-                                <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>White</label>
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Pink</label>
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Gold</label>
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Blue</label>
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Orange</label>
-                                <label class="checkbox"><input type="checkbox" name="checkbox"><i></i> Brown</label> 
-                            </div>
-                        </div>           
+                        </div>                               
                     </div>
                     
                 </div>
@@ -260,45 +200,7 @@
             </div>
         </div>
         <!--//products-->  
-        <!-- footer-top -->
-        <div class="w3agile-ftr-top">
-            <div class="container">
-                <div class="ftr-toprow">
-                    <div class="col-md-4 ftr-top-grids">
-                        <div class="ftr-top-left">
-                            <i class="fa fa-truck" aria-hidden="true"></i>
-                        </div> 
-                        <div class="ftr-top-right">
-                            <h4>FREE DELIVERY</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus justo ac </p>
-                        </div> 
-                        <div class="clearfix"> </div>
-                    </div> 
-                    <div class="col-md-4 ftr-top-grids">
-                        <div class="ftr-top-left">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </div> 
-                        <div class="ftr-top-right">
-                            <h4>CUSTOMER CARE</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus justo ac </p>
-                        </div> 
-                        <div class="clearfix"> </div>
-                    </div>
-                    <div class="col-md-4 ftr-top-grids">
-                        <div class="ftr-top-left">
-                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                        </div> 
-                        <div class="ftr-top-right">
-                            <h4>GOOD QUALITY</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus justo ac </p>
-                        </div>
-                        <div class="clearfix"> </div>
-                    </div> 
-                    <div class="clearfix"> </div>
-                </div>
-            </div>
-        </div>
-        <!-- //footer-top -->  
+        
         <!-- subscribe -->
         <div class="subscribe"> 
             <div class="container">

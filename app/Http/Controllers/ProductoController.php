@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Categoria;
 
-use Illuminate\Contracts\Support\Jsonable;
+//use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -85,4 +85,25 @@ class ProductoController extends Controller
             
         //}
     }
+
+    public function precios(){
+        $cont = 0;
+        $min=$request->get('min');
+        $max=$request->get('max');
+        
+        while($cont<count($tra_dni)){
+            $trabajadores= new HecTrabajador();
+            $trabajadores->tra_dni=$tra_dni[$cont];
+            $trabajadores->tra_ape=$tra_ape[$cont];
+            $trabajadores->tra_nom=$tra_nom[$cont];
+            $trabajadores->id_car_tra=$id_car_tra[$cont];
+            $trabajadores->id_for_pag=$id_for_pag[$cont];
+            $trabajadores->id_ban=$id_ban[$cont];
+            $trabajadores->tra_num_cue=$tra_num_cue[$cont];
+            $trabajadores->save();
+            $cont = $cont+1;
+        }
+         return response()->json(['success' => 1]);            
+    }
+
 }
