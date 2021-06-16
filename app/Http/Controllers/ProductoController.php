@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Collection;
 class ProductoController extends Controller
 {
+    //Función que realiza la petición de todos los productos
     public function index(Request $request)    
-    {
+    {   
         $categorias=Categoria::select('id','name')->orderBy('name')->get();
         $query=trim($request->input('searchText'));
         //if($request->ajax()){                    
@@ -29,17 +30,25 @@ class ProductoController extends Controller
             ->select(\DB::raw('count(*) as total_productos'))    
             ->get();
           
-            //dd($productos);
             return response()->json([$productos,$total_productos,$query,$categorias]);
             
         //}
     }
 
+    //Función que realiza la petición de búsqueda por nombre de productos o categoría
     public function buscar(Request $request)    
     {
         $categorias=Categoria::select('id','name')->orderBy('name')->get();
         $query=trim($request->input('searchText'));
-        //if($request->ajax()){                    
+
+        $validator = Validator::make(['searchText' => $query], [
+            'searchText' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        }else {
+            //if($request->ajax()){                    
             
             $productos=Producto::join('category as c','product.category','=','c.id')
             ->select('product.id','product.name','product.url_image','product.price','product.discount','product.category')
@@ -55,55 +64,120 @@ class ProductoController extends Controller
             ->orwhere('c.name','LIKE','%'.$query.'%')        
             ->get();
           
-            //dd($productos);
             return response()->json([$productos,$total_productos,$query,$categorias]);
             
-        //}
+            //}
+        }
+        
+        
     }
 
+    //Función que realiza la petición de categorías
     public function categorias(Request $request,$id)    
     {
         $categorias=Categoria::select('id','name')->orderBy('name')->get();
         $query=trim($request->input('searchText'));
-        //if($request->ajax()){                    
-            
+
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        }else {
+            //if($request->ajax()){                    
+                
             $productos=Producto::join('category as c','product.category','=','c.id')
             ->select('product.id','product.name','product.url_image','product.price','product.discount','product.category')
-            ->where('product.category','=',$id)  
-                        
+            ->where('product.category','= ?',$id)                          
             ->orderBy('c.name','asc')
             ->orderBy('product.name','asc')                
             ->paginate(10);
 
             $total_productos=Producto::join('category as c','product.category','=','c.id')
             ->select(\DB::raw('count(*) as total_productos')) 
-            ->where('product.category','=',$id)        
+            ->where('product.category','= ?',$id)      
             ->get();
-          
-            //dd($productos);
-            return response()->json([$productos,$total_productos,$query,$categorias]);
             
-        //}
+            return response()->json([$productos,$total_productos,$query,$categorias]);
+                
+            //}
+        }
     }
 
-    public function precios(){
-        $cont = 0;
-        $min=$request->get('min');
-        $max=$request->get('max');
+    //Función que realiza la petición del filtro por precios
+    public function precios(Request $request){
+        $categorias=Categoria::select('id','name')->orderBy('name')->get();
+        $query=trim($request->input('searchText'));
         
-        while($cont<count($tra_dni)){
-            $trabajadores= new HecTrabajador();
-            $trabajadores->tra_dni=$tra_dni[$cont];
-            $trabajadores->tra_ape=$tra_ape[$cont];
-            $trabajadores->tra_nom=$tra_nom[$cont];
-            $trabajadores->id_car_tra=$id_car_tra[$cont];
-            $trabajadores->id_for_pag=$id_for_pag[$cont];
-            $trabajadores->id_ban=$id_ban[$cont];
-            $trabajadores->tra_num_cue=$tra_num_cue[$cont];
-            $trabajadores->save();
-            $cont = $cont+1;
+        $min=trim($request->min);
+        $max=trim($request->max);
+        
+        $validator = Validator::make(['min' => $min,'max' => $max], [
+            'min' => 'required|numeric',
+            'max' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        }else {
+
+            //if($request->ajax()){                    
+        
+            $productos=Producto::join('category as c','product.category','=','c.id')
+            ->select('product.id','product.name','product.url_image','product.price','product.discount','product.category')
+            ->whereBetween('product.price', [$min, $max])                    
+            ->orderBy('c.name','asc')
+            ->orderBy('product.name','asc')                
+            ->paginate(10);
+
+            $total_productos=Producto::join('category as c','product.category','=','c.id')
+            ->select(\DB::raw('count(*) as total_productos')) 
+            ->whereBetween('product.price', [$min, $max])           
+            ->get();
+
+            return response()->json([$productos,$total_productos,$query,$categorias]);        
+          
+            //}   
         }
-         return response()->json(['success' => 1]);            
+          
+    }
+
+    //Función que realiza la petición del filtro por descuento
+    public function descuento(Request $request){
+        $categorias=Categoria::select('id','name')->orderBy('name')->get();
+        $query=trim($request->input('searchText'));
+        
+        $min=trim($request->min);
+        $max=trim($request->max);
+        
+        $validator = Validator::make(['min' => $min,'max' => $max], [
+            'min' => 'required|numeric',
+            'max' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            abort(404);
+        }else {
+
+            //if($request->ajax()){                    
+            
+            $productos=Producto::join('category as c','product.category','=','c.id')
+            ->select('product.id','product.name','product.url_image','product.price','product.discount','product.category')
+            ->whereBetween('product.discount', [$min, $max])                    
+            ->orderBy('c.name','asc')
+            ->orderBy('product.name','asc')                
+            ->paginate(10);
+
+            $total_productos=Producto::join('category as c','product.category','=','c.id')
+            ->select(\DB::raw('count(*) as total_productos')) 
+            ->whereBetween('product.discount', [$min, $max])           
+            ->get();
+
+            return response()->json([$productos,$total_productos,$query,$categorias]);   
+              
+            //}
+        }    
     }
 
 }
